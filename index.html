@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>&#9752; clover</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Sometype+Mono:ital@0;1&display=swap');
+
+        :root {
+            --bg: url('https://i.imgur.com/tQSIGl8.jpeg');
+            --box-bg: rgba(240, 248, 255, 0.45);
+            --box-border: rgba(100, 130, 160, 0.6);
+            --font-head: 'Cormorant Garamond', serif;
+            --font-body: 'Sometype Mono', monospace;
+            --text: #1c2b36;
+            --text-dim: #435b6e;
+            --accent: #2a4c6a;
+            --hud: rgba(70, 100, 130, 0.5);
+            --shadow: 0 8px 32px rgba(100, 120, 140, 0.15), inset 0 0 15px rgba(255,255,255,0.8);
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: #000;
+            user-select: none;
+            font-family: var(--font-body);
+            color: var(--text);
+        }
+
+        a { color: inherit; text-decoration: none; }
+        a:hover { color: red; }
+
+        #bg-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: var(--bg) center/cover no-repeat;
+            z-index: 0;
+        }
+
+        .film-grain {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.35;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            mix-blend-mode: overlay;
+        }
+
+        #particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+		
+        .card-container {
+            position: absolute;
+            top: 10%;
+            right: 8%;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: flex-end; 
+        }
+
+        .text-box {
+            background: var(--box-bg);
+            border: 1px solid var(--box-border);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 25px 20px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-sizing: border-box;
+            width: 60vh;
+        }
+
+        #title-block {
+            padding: 12px 20px;
+        }
+
+        #lastfm {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.9rem;
+            padding: 15px 20px;
+            width: auto;
+        }
+
+        h1 {
+            font-family: var(--font-head);
+            font-weight: 300;
+            font-size: 3.8rem;
+            margin: 0;
+            line-height: 1;
+            letter-spacing: 2px;
+            text-transform: lowercase;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-top: 5px;
+            color: var(--text-dim);
+        }
+
+        .vertical-log {
+            position: absolute;
+            right: 40px;
+            top: 15%;
+            writing-mode: vertical-rl;
+            font-size: 0.7rem;
+            letter-spacing: 6px;
+            color: var(--hud);
+            text-transform: uppercase;
+            z-index: 102;
+        }
+
+        .hud-line-h {
+            position: absolute;
+            height: 1px;
+            background: var(--hud);
+            z-index: 2;
+        }
+
+        .scatter-imgd {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 20vh;
+            white-space: nowrap;
+            z-index: 100;
+        }
+
+        .hidden { display: none !important; }
+
+        @media (max-width: 768px) {
+            .card-container {
+                right: 5vw;
+                top: 5%;
+                align-items: stretch;
+            }
+            .text-box {
+                width: 85vw; 
+            }
+            .vertical-log { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div id="bg-layer"></div>
+    <div class="film-grain"></div>
+    <canvas id="particles"></canvas>
+
+    <div class="hud-line-h" style="top: 25%; left: 0; width: 6%;">&nbsp;</div>
+    <div class="hud-line-h" style="top: 75%; right: 0; width: 15%;">&nbsp;</div>
+    <div class="vertical-log">A THOUSAND WINTERS OF LONELINESS // A DOZEN SUMMERS AGAINST THE WORLD</div>
+
+    <div class="scatter-imgd">
+        
+      <a href="aleph.html">aleph</a><br>
+      <a href="s/strawberry.html">strwbarys</a><br>
+        afraid<br>
+        long road ahead<br>
+        pls help
+    </div>
+
+
+    <div class="card-container">
+        <div id="title-block" class="text-box">
+            <h1>cat's cradle</h1>
+            <div class="subtitle"></div>
+        </div>
+
+        <div id="waster-quote" class="text-box">
+            a tangle of threads with no clear pattern or knot.
+            i’m tired of trying to pull it apart. is it okay if we only sit here?
+        </div>
+
+        <div id="lastfm" class="text-box hidden">
+            <svg id="music-note" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:20px; height:20px; stroke: var(--accent);">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m9 9 10.5-3m0 6.553v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 1 1-.99-3.467l2.31-.66a2.25 2.25 0 0 0 1.632-2.163Zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 1 1-.99-3.467l2.31-.66A2.25 2.25 0 0 0 9 15.553Z" />
+            </svg>
+            <div id="song-text">synchronizing...</div>
+            <canvas id="equalizer" width="18" height="15"></canvas>
+        </div>
+    </div>
+
+<script>
+    // canvas setup
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+    
+    let w, h;
+    function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.onresize = resize;
+
+    // simple particle system without all the OOP bloat
+    let dots = [];
+    for(let i=0; i<120; i++) {
+        dots.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            size: Math.random() * 2 + 0.5,
+            vx: Math.random() - 0.5,
+            vy: Math.random() + 0.5
+        });
+    }
+
+    function loop() {
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = 'rgba(255,255,255,0.85)';
+        
+        for(let i = 0; i < dots.length; i++) {
+            let p = dots[i];
+            p.y += p.vy;
+            p.x += p.vx + 0.5;
+            
+            if(p.y > h + 10) { p.y = -10; p.x = Math.random() * w; }
+            if(p.x > w + 10) p.x = -10;
+            if(p.x < -10) p.x = w + 10;
+            
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        requestAnimationFrame(loop);
+    }
+    loop();
+
+    // equalizer drawer
+    function drawEqualizer() {
+        const eqCanvas = document.getElementById("equalizer");
+        if (!eqCanvas) return;
+        const eqCtx = eqCanvas.getContext("2d");
+        const accentColor = getComputedStyle(document.body).getPropertyValue('--accent').trim();
+        
+        eqCtx.clearRect(0, 0, eqCanvas.width, eqCanvas.height);
+        eqCtx.fillStyle = accentColor;
+        
+        for (let i = 0; i < 3; i++) {
+            let height = Math.random() * 12 + 3;
+            eqCtx.fillRect(i * 6, 15 - height, 4, height);
+        }
+    }
+    setInterval(drawEqualizer, 200);
+
+    // lastfm fetcher
+    function getSong() {
+        fetch("https://lastfm-last-played.biancarosa.com.br/exholalia/latest-song")
+            .then(res => res.json())
+            .then(res => {
+                if (res && res.track) {
+                    const artist = res.track.artist["#text"];
+                    const trackName = res.track.name;
+                    document.getElementById("song-text").textContent = artist.toLowerCase() + " - " + trackName.toLowerCase();
+                    document.getElementById("lastfm").classList.remove("hidden");
+                }
+            })
+            .catch(err => {
+                // sometimes API times out, just show fallback
+                document.getElementById("song-text").textContent = "signal lost...";
+                document.getElementById("lastfm").classList.remove("hidden");
+            });
+    }
+
+    getSong();
+    setInterval(getSong, 15000);
+</script>
+</body>
+</html>
