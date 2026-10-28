@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Sometype+Mono:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Sometype+Mono:ital@0;1&display=swap');
 
         :root {
             --bg: url('https://i.imgur.com/tQSIGl8.jpeg');
@@ -61,7 +61,7 @@
             pointer-events: none;
             z-index: 1;
         }
-		
+        
         .card-container {
             position: absolute;
             top: 10%;
@@ -83,6 +83,7 @@
             -webkit-backdrop-filter: blur(8px);
             box-sizing: border-box;
             width: 60vh;
+            max-width: 90vw; /* Prevents overflow on smaller viewports */
         }
 
         #title-block {
@@ -96,6 +97,8 @@
             font-size: 0.9rem;
             padding: 15px 20px;
             width: auto;
+            max-width: 100%;
+            word-break: break-word; /* Ensures long song titles wrap nicely */
         }
 
         h1 {
@@ -150,12 +153,17 @@
             .card-container {
                 right: 5vw;
                 top: 5%;
-                align-items: stretch;
+                align-items: flex-end; /* Keeps everything anchored to the right side */
             }
             .text-box {
                 width: 85vw; 
             }
             .vertical-log { display: none; }
+            
+            #lastfm {
+                max-width: 100%;
+				margin-left:5%;
+            }
         }
     </style>
 </head>
